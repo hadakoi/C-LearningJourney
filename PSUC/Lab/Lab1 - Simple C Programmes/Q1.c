@@ -1,5 +1,6 @@
-/*Q1 -> Write a C program to add two integers a and b read through the keyboard. Display the
-result using third variable sum */
+/*  
+Write a C program to add two integers a and b read through the keyboard. Display the result using third variable sum
+*/
 
 #include <stdio.h>
 
