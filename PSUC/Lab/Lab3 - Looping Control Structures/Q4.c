@@ -1,5 +1,5 @@
 /*
-do the following with the help of iterative (looping) control structures such as while and do-while statements
+do the following with the help of iterative (looping) control structures
 Write a program using do-while loop to read the numbers until -1 is encountered. Also count the number of prime numbers and composite numbers entered by user.
 */
 
@@ -20,7 +20,7 @@ int main(){
     if (number <= 1) {
       // Numbers less than or equal to 1 are neither prime nor composite hence we skip this iteration
       continue; 
-   }
+    }
 
    int isPrime = 1; // Assume the number is prime
 
@@ -30,14 +30,14 @@ int main(){
          isPrime = 0; // Not a prime number
          break;
       }
-   }
+    }
 
-        if (isPrime == 1) {
+    if (isPrime == 1) {
          primeCount++;
-        } 
-        else {
+    } 
+    else {
          compositeCount++;
-        }
+    }
 
     } while (number != -1);
 

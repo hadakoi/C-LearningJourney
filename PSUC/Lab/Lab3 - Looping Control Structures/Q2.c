@@ -1,5 +1,5 @@
 /*
-do the following with the help of iterative (looping) control structures such as while and do-while statements
+do the following with the help of iterative (looping) control structures
 Generate prime numbers between 2 given limits.
 */
 
