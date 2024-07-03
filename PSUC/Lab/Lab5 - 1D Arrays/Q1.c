@@ -28,7 +28,7 @@ int main(){
       if (arr[x] > largest) {
             largest = arr[x];
         }
-        if (arr[x] < smallest) {
+      if (arr[x] < smallest) {
             smallest = arr[x];
         }
    }
