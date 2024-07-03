@@ -6,6 +6,7 @@ Find the largest and smallest element in a 1D array.
 #include <stdio.h>
 
 int main(){
+   
    int n, x;
    printf("Enter the number of elements in the array: ");
    scanf("%d", &n);
