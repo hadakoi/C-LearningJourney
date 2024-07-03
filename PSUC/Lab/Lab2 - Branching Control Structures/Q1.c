@@ -9,13 +9,15 @@ int main(){
 
 int num;
 printf("Enter a Number: ");
-scanf("%d", &num)
+scanf("%d", &num);
 
 if (num % 2 == 0) { // The % operator checks for remainders.for eg 10/2 = 5 and there will be no remainder however 9/2 is 4 with 1 remainder hence odd
     printf("%d is even.\n", num);
 } else {
     printf("%d is odd.\n", num);
 }
+
+return 0;
 
 }
 
