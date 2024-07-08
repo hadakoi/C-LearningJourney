@@ -1,7 +1,13 @@
+/*
+write these C programs without using STRING-HANDLING functions
+Input a string and toggle the case of every character in the input string.
+*/
+
+
 #include <stdio.h>
 
 int main() {
-   
+
     char str[100];
     int i = 0;
 

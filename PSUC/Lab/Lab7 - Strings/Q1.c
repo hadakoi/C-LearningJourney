@@ -1,3 +1,8 @@
+/*
+write these C programs without using STRING-HANDLING functions
+Count the number of words in a sentence.
+*/
+
 #include <stdio.h>
 
 int main() {
