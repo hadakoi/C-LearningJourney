@@ -1,8 +1,7 @@
 /*
-write these C programs without using STRING-HANDLING functions
+write this C program
 Check whether the given string is a palindrome or not.
 */
-
 
 #include <stdio.h>
 

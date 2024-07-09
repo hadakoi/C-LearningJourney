@@ -1,5 +1,5 @@
 /*
-write these C programs without using STRING-HANDLING functions
+write this C program
 Count the number of words in a sentence.
 */
 
