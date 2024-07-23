@@ -1,70 +1,52 @@
 /*
-With the knowledge of recursive functions, Structures and pointers
-Create a student record with name, rollno, marks of 3 subjects (m1, m2, m3). Compute
-the average of marks for 3 students and display the names of the students in ascending
-order of their average marks.
+With the knowledge of modularization, function definition, function call etc.,
+Write a function CornerSum which takes as a parameter, no. of rows and no. of
+columns of a matrix and returns the sum of the elements in the four corners of the
+matrix. Write a main function to test the function.
 */
 
 #include <stdio.h>
-#include <string.h>
 
-int main() {
-    // Define a structure to hold student record
-   typedef struct {
-      char name[50];
-      int rollno;
-      float m1, m2, m3;
-      float average;
-    } Student;
-
-   Student students[3];
-   Student temp;
-
-   // Input student records
-   for (int i = 0; i < 3; i++) {
-
-      printf("Enter details for student %d\n", i + 1);
-        
-      printf("Name: ");
-      gets(students[i].name);
-        
-      printf("Roll number: ");
-      scanf("%d", &students[i].rollno);
-        
-      printf("Marks in subject 1: ");
-      scanf("%f", &students[i].m1);
-        
-      printf("Marks in subject 2: ");
-      scanf("%f", &students[i].m2);
-        
-      printf("Marks in subject 3: ");
-      scanf("%f", &students[i].m3);
-        
-      // Compute average for the student
-      students[i].average = (students[i].m1 + students[i].m2 + students[i].m3) / 3.0;
-        
-      printf("\n");
-
+// Function to calculate the sum of corner elements of a matrix
+int CornerSum(int rows, int cols, int matrix[rows][cols]) {
+   if (rows < 2 || cols < 2) {
+      // For a matrix with less than 2 rows or columns, corners are not well-defined
+      return 0;
    }
     
-   // Sort students by average marks in ascending order
-   for (int i = 0; i < 3 - 1; i++) {
-      for (int j = i + 1; j < 3; j++) {
-         if (students[i].average > students[j].average) {
-               // Swap students[i] and students[j]
-               temp = students[i];
-               students[i] = students[j];
-               students[j] = temp;
-         }
+   int sum = 0;
+   sum += matrix[0][0];           // Top-left corner
+   sum += matrix[0][cols - 1];    // Top-right corner
+   sum += matrix[rows - 1][0];    // Bottom-left corner
+   sum += matrix[rows - 1][cols - 1]; // Bottom-right corner
+    
+   return sum;
+}
+
+int main() {
+
+   int rows, cols;
+    
+   printf("Enter the number of rows: ");
+   scanf("%d", &rows);
+    
+   printf("Enter the number of columns: ");
+   scanf("%d", &cols);
+    
+   int matrix[rows][cols];
+    
+   printf("Enter the elements of the matrix:\n");
+   for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+         scanf("%d", &matrix[i][j]);
       }
    }
     
-    // Display names of students in ascending order of their average marks
-   printf("Students in ascending order of their average marks:\n");
-   for (int i = 0; i < 3; i++) {
-      printf("%s (Average Marks: %.2f)\n", students[i].name, students[i].average);
-   }
+   int sum = CornerSum(rows, cols, matrix);
+    
+   printf("The sum of the corner elements is: %d\n", sum);
     
    return 0;
    
 }
+

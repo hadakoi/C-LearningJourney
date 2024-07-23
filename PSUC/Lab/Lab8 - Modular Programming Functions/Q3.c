@@ -1,40 +1,42 @@
 /*
-With the knowledge of recursive functions, Structures and pointers
-Find the maximum number in the input integer array using pointers.
+With the knowledge of modularization, function definition, function call etc.,
+Write a function IsPalin to check whether the given string is a palindrome or not.
+Write a main function to test this function.
 */
 
 #include <stdio.h>
+#include <string.h>
 
-#include <stdio.h>
+// Function to check if a string is a palindrome
+int IsPalin(char str[]) {
+
+   int left = 0;
+   int right = strlen(str) - 1;
+    
+   while (left < right) {
+      if (str[left] != str[right]) {
+         return 0; // Not a palindrome
+      }
+      left++;
+      right--;
+   }
+    
+   return 1; // Palindrome
+}
 
 int main() {
-
-   int n;
    
-   printf("Enter the number of elements in the array: ");
-   scanf("%d", &n);
-
-   int arr[n];
-
-   printf("Enter the elements of the array: ");
-   for (int i = 0; i < n; i++) {
-      scanf("%d", &arr[i]);
+   char str[100];
+    
+   printf("Enter a string: ");
+   gets(str);  // Use gets to read the string
+    
+   if (IsPalin(str) == 1) {
+      printf("The string is a palindrome.\n");
+   } else {
+      printf("The string is not a palindrome.\n");
    }
-
-    // Initialize pointers
-   int *ptr = arr;
-   int *endPtr = arr + n;
-   int max = *ptr; // Assume the first element is the maximum
-
-   // Traverse the array using pointers to find the maximum value
-   for (int *currentPtr = ptr; currentPtr < endPtr; currentPtr++) {
-      if (*currentPtr > max) {
-         max = *currentPtr;
-      }
-   }
-
-   printf("The maximum number in the array is: %d\n", max);
-
+    
    return 0;
 
 }

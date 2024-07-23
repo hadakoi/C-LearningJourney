@@ -5,8 +5,6 @@ Find the maximum number in the input integer array using pointers.
 
 #include <stdio.h>
 
-#include <stdio.h>
-
 int main() {
 
    int n;
