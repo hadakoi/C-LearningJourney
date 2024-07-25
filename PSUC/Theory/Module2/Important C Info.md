@@ -18,6 +18,8 @@ Rules for valid variable names (identifiers) :
 
 Examples for Variable names ->
 
+![Screenshot 2024-07-25 211427](https://github.com/user-attachments/assets/55b12514-a81f-4f26-8b73-ef768220e517)
+
 # Data Types
 
 Basic data types: int, float, double, char, and void.
@@ -28,7 +30,7 @@ Basic data types: int, float, double, char, and void.
 - char: can be used to store a single character, such as the letter a, the digit character 6, or a semicolon.
 - void: is used to denote nothing or empty.
 
-
+  
 ## Integer
 
 The basic integer type is int.
@@ -39,6 +41,8 @@ modifiers (type specifiers)
 - long: typically uses more bits
 - Signed: both negative and positive numbers
 - Unsigned: only positive numbers
+
+  ![Screenshot 2024-07-25 211736](https://github.com/user-attachments/assets/d203e166-bb1f-4e77-adfa-6509599ac6fc)
 
 ## Character
 
@@ -76,6 +80,8 @@ There are three floating-point type specifiers
 - float
 - double
 - long double
+
+![Screenshot 2024-07-25 212105](https://github.com/user-attachments/assets/b2104f0e-a29e-4ac3-a82c-4dd3ad11cffe)
 
 ## Void
 
@@ -125,13 +131,16 @@ If necessary, you can always use parentheses in an expression to force the terms
 
 An expression such as a < b containing a relational operator is called a relational expression.
 
- The value of a relational expression is one, if the specified relation is true and zero if the relation is false.
+The value of a relational expression is one, if the specified relation is true and zero if the relation is false.
 
 E.g.:
 10 < 20 is TRUE and 
 20 < 10 is FALSE
 
 The arithmetic expressions will be evaluated first & then the results will be compared. That is, arithmetic operators have a higher priority over relational operators. > >= < <= all have the same precedence and below them are the next precedence equality operators i.e. == and !=
+
+![Screenshot 2024-07-25 232137](https://github.com/user-attachments/assets/290af0bf-3ddd-4f09-acb1-425174ac4b07)
+![Screenshot 2024-07-25 232158](https://github.com/user-attachments/assets/576553e5-5de0-4105-81f2-c2ca6069d108)
 
 ## Logical 
 
@@ -163,6 +172,9 @@ Prefix operator ++ appears before the variable.
 
 Postfix operator ++ appears after the variable.
 
+![Screenshot 2024-07-25 232845](https://github.com/user-attachments/assets/c2d49eed-8694-40c2-a9e9-dc9da019dd51)
+![Screenshot 2024-07-25 232822](https://github.com/user-attachments/assets/e0134749-964a-477d-90c9-be84a20d80c7)
+
 ## BitWise Operators
 
 ### -Bitwise Logical Operators
@@ -179,6 +191,9 @@ z = x & y sets z=10 like this
 
 0000000000001010 <-> z = x & y
 
+![Screenshot 2024-07-25 233244](https://github.com/user-attachments/assets/2971a6b2-c142-4d30-b438-38b9e82fd02b)
+
+
 ### -Bitwise Shift Operators
 
 These consist of << and >>
@@ -193,6 +208,8 @@ rightmost n bits that are vacated are filled with 0’s.
 
 the >> causes all the bits in operand op to be shifted to the
 right by n positions. The rightmost n bits will be lost and the left most vacated bits are filled with 0’s if number is unsigned integer
+
+![Screenshot 2024-07-25 233632](https://github.com/user-attachments/assets/a5eea945-3a02-496d-b4c0-17586346b33f)
 
 ### -Bitwise complement Operator
 
@@ -285,3 +302,7 @@ The meaning of the comma operator in the general expression e1, e2 is
 expression is the value of e2 ”.
 
 ## Associativity and Precedence Table
+
+![Screenshot 2024-07-25 234812](https://github.com/user-attachments/assets/41b47310-8333-4e64-8513-7d1990929b2d)
+![Screenshot 2024-07-25 234827](https://github.com/user-attachments/assets/dd954b38-c35b-42c6-9943-7e7a4c78b809)
+![Screenshot 2024-07-25 234848](https://github.com/user-attachments/assets/c0780ed0-34e1-4f69-9c66-d50e4212e4f4)
