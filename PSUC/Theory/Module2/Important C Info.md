@@ -18,13 +18,6 @@ Rules for valid variable names (identifiers) :
 
 Examples for Variable names ->
 
-
-
-
-
-
-
-
 # Data Types
 
 Basic data types: int, float, double, char, and void.
@@ -99,8 +92,196 @@ The different operators are:
 - Logical
 - Increment and Decrement
 - Bitwise
-- Assignment
+- Type Conversion
+- Assignment 
 - Conditional
+- comma (,) operator
 
 ## Arithmetic
 
+The binary arithmetic operators are +, -, *, / and the modulus operator %.
+- The / operator when used with integers truncates any fractional part i.e.
+E.g. 5/2 = 2 and not 2.5
+- Therefore % operator produces the remainder when 5 is divided by 2 i.e. 1
+- The % operator cannot be applied to float or double
+- E.g. x % y wherein % is the operator and x, y are operands
+
+When Working with these operators we must consider Precedence and Associativity
+
+Precedence: One operator can have a higher priority, or precedence, over another operator. The operators within C are grouped hierarchically according to their precedence (i.e., order of
+evaluation)
+- Operations with a higher precedence are carried out before operations having a lower precedence.
+
+High priority operators * / %
+
+Low priority operators + -
+
+- Example: * has a higher precedence than +
+a + b * c → a+(b*c)
+
+If necessary, you can always use parentheses in an expression to force the terms to be  evaluated in any desired order
+
+## Relational 
+
+An expression such as a < b containing a relational operator is called a relational expression.
+
+ The value of a relational expression is one, if the specified relation is true and zero if the relation is false.
+
+E.g.:
+10 < 20 is TRUE and 
+20 < 10 is FALSE
+
+The arithmetic expressions will be evaluated first & then the results will be compared. That is, arithmetic operators have a higher priority over relational operators. > >= < <= all have the same precedence and below them are the next precedence equality operators i.e. == and !=
+
+## Logical 
+
+## Increment and Decrement
+
+The operator ++ adds 1 to the operand.
+
+The operator -- subtracts 1 from the operand.
+
+Both are unary operators.
+
+Ex: ++i or i++ is equivalent to i=i+1
+
+say
+
+m = 5 and 
+y = ++m
+
+then the value of y and m would be 6.
+
+However 
+
+m = 5 and 
+y = m++
+
+Here y continues to be 5. Only m changes to 6.
+
+Prefix operator ++ appears before the variable.
+
+Postfix operator ++ appears after the variable.
+
+## BitWise Operators
+
+### -Bitwise Logical Operators
+
+Bitwise Logical Operators consist off &(AND), |(OR), ^(EXOR)
+
+Suppose x = 10, y = 15
+
+z = x & y sets z=10 like this
+
+0000000000001010 = x
+
+0000000000001111 = y
+
+0000000000001010 <-> z = x & y
+
+### -Bitwise Shift Operators
+
+These consist of << and >>
+They are used to move bit patterns to the left or right and are used in the following form -> 
+
+op << n or op >> n here op is the operand shifted and n is the number of positions
+
+<< causes all the bits in the operand op to be shifted to the left by
+n positions.
+The leftmost n bits in the original bit pattern will be lost and the
+rightmost n bits that are vacated are filled with 0’s.
+
+the >> causes all the bits in operand op to be shifted to the
+right by n positions. The rightmost n bits will be lost and the left most vacated bits are filled with 0’s if number is unsigned integer
+
+### -Bitwise complement Operator
+
+The complement operator(~) is an unary operator and inverts all
+the bits represented by its operand.
+
+Suppose x=1001100010001111
+
+~x=0110011101110000 (complement)
+
+Also called as 1’s complement operator.
+
+## Type Convserions
+
+The final result of an expression is converted to the type of the variable on
+the left of the assignment sign before assigning the value to it
+-  However the following changes are introduced during the final assignment
+-  Float to int causes truncation of the fractional part
+- Double to float caused rounding of digits
+- Long int to int causes dropping of the excess higher order bits
+
+This can also be done by using a Type cast operator than leaving it to the system
+
+The general form of a type casting is (type-name) expression
+
+int a = 150;
+
+float f; 
+
+f = (float) a / 100; // type cast operator
+
+- The type cast operator has the effect of converting the value of the variable ‘a’ to type
+float for the purpose of evaluation of the expression.
+- This operator does NOT permanently affect the value of the variable ‘a’;
+- The type cast operator has a higher precedence than all the arithmetic operators except the unary minus and unary plus.
+- Examples of the use of type cast operator:
+
+(int) 29.55 + (int) 21.99 results in 29 + 21\
+
+(float)6 /(float)4 results in 1.5
+
+(float)6 / 4 results in 1.5
+
+When Assigning an integer value to a floating variable: does not cause any change in the value of the number; the value is simply converted by the system and stored in the floating format.
+
+When Assign a floating-point value to an integer variable: the decimal portion of the number gets truncated
+
+Integer arithmetic (division):
+
+- int divided by int => result is integer division
+- int divided by float or float divided by int
+
+## Assignment Operators
+
+The C language permits you to join the arithmetic operators with the
+assignment operator using the following general format: op=, where op is an arithmetic operator, including +, –, *, /, and %.
+
+Example: precedence of op:
+
+a /= b + c
+
+Equivalent to:
+
+a = a / (b + c)
+
+## Conditional Operators
+
+condition ? expression1 : expression2
+
+- condition is an expression that is evaluated first.
+- If the result of the evaluation of condition is TRUE (nonzero), then expression1 is evaluated and the result of the evaluation becomes the result of the operation.
+- If condition is FALSE (zero), then expression2 is evaluated and its result becomes the result of the operation.
+
+maxValue = ( a > b ) ? a : b;
+
+Equivalent to:
+
+if ( a > b ) then maxValue = a
+
+else maxValue = b
+
+## Comma Operator
+
+The coma operator is used basically to separate expressions.
+
+i = 0, j = 10; // in initialization [ l → r ]
+
+The meaning of the comma operator in the general expression e1, e2 is
+“evaluate the sub expression e1, then evaluate e2; the value of the
+expression is the value of e2 ”.
+
+## Associativity and Precedence Table
