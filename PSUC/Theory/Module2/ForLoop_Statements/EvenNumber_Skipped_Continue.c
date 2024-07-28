@@ -17,3 +17,16 @@ int main() {
 
 }
 
+
+/*
+
+Expected Output ->
+1
+3
+5
+7
+9
+
+*/
+
+
