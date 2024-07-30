@@ -1,10 +1,10 @@
 /*
 Using For Loops print the pattern ->
 
-   *   j = 1 i = 1 spaces = 3
-  **   j = 2 i = 2 spaces = 2
- ***   j = 3 i = 3 spaces = 1
-****   j = 4 i = 4 spaces = 0
+   *  
+  **
+ ***
+****
 
 and so on depending on number of lines user enters.
 */
@@ -19,22 +19,22 @@ int main(){
    printf("Enter Number of lines to print the *: ");
    scanf("%d", &n);
 
-   for (i = 1; i <= n; i++) {
+   for (i = 1; i <= n; i++) {  // Loop to iterate over each row
 
-      for (spaces = 1; spaces <= n - i; spaces++) {
+      for (int spaces = 1; spaces <= n - i; spaces++) {  // Loop to print spaces
          printf(" ");
-        }
-       
-      for (j = 1; j <= i; j++) {
+      }
+      for (j = 1; j <= i; j++) {  // Loop to print stars
          printf("*");
       }
-      
-      printf("\n");
-   }
 
-   return 0;
+      printf("\n");  // Move to the next line after printing stars in the current row
+    }
+
+    return 0;
 
 }
+
 
    
 
