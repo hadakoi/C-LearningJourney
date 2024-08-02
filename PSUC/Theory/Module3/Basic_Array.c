@@ -21,3 +21,17 @@ int main() {
    return 0;
 
 }
+
+/*
+Easy way to calculate Number of Elements in a 1D array->
+
+Calculate the total size of the array
+size_t totalSize = sizeof(arr);
+
+Calculate the size of one element
+size_t elementSize = sizeof(arr[0]);
+
+Calculate the number of elements
+size_t numElements = totalSize / elementSize;
+
+*/
