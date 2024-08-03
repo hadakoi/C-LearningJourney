@@ -2,25 +2,16 @@
 
 int main() {
 
-   int arr[] = {64, 25, 12, 22, 11};  // Example array
-   int n = sizeof(arr) / sizeof(arr[0]); // how to calculate number of vairables in an array 
-
-   // else use ->
-    
-   /*
-
-   int n
+   int n, i;
    printf("Enter Number of digits in the Array You want to Sort: ");
-   scanf("%d", &n)
-   int arr[n]
+   scanf("%d", &n);
+   int arr[n];
 
-   int i
+   printf("Enter %d elements:\n", n);
    for(i = 0; i < n ; i++){
-      scanf("%d", &arr[i])
+      scanf("%d", &arr[i]);
    }
     
-   */
-
    // Selection sort in ascending order
    for (int i = 0; i < n - 1; i++) {
       int min_idx = i;  // Assume the current element is the minimum
@@ -49,13 +40,13 @@ int main() {
       for (int j = i + 1; j < n; j++) {
          // Find the index of the largest element in the remaining array
          if (arr[j] > arr[max_idx]) {
-             max_idx = j;
+            max_idx = j;
          }
-        }
-        // Swap the found maximum element with the first element of the unsorted part
-        int temp = arr[max_idx];
-        arr[max_idx] = arr[i];
-        arr[i] = temp;
+      }
+      // Swap the found maximum element with the first element of the unsorted part
+      int temp = arr[max_idx];
+      arr[max_idx] = arr[i];
+      arr[i] = temp;
    }
 
    // Print the sorted array in descending order
