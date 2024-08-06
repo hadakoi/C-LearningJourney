@@ -16,7 +16,7 @@ int main() {
       scanf("%d", &arr[i]);
    }
 
-    selectionSort(arr, n, 0);
+   selectionSort(arr, n, 0);
 
    printf("Sorted array:\n");
    for (i = 0; i < n; i++) {
