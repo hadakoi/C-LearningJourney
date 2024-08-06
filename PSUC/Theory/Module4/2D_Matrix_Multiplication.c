@@ -54,8 +54,8 @@ int main() {
    printf("First Matrix:\n");
    displayMatrix(matrix1, r1, c1);
 
-    printf("Second Matrix:\n");
-    displayMatrix(matrix2, r2, c2);
+   printf("Second Matrix:\n");
+   displayMatrix(matrix2, r2, c2);
 
    multiplyMatrices(matrix1, matrix2, result, r1, c1, c2);
 
