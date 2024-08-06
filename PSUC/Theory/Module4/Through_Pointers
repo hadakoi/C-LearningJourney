@@ -1,0 +1,16 @@
+#include <stdio.h>
+
+int main() {
+
+   int var1, var2;   // Two integer variables
+   int *ptr;         // Pointer to integers
+
+   ptr = &var1;      // Set pointer to address of var1
+   *ptr = 37;        // Dereference pointer to set var1 to 37
+   var2 = *ptr;      // Set var2 to the value pointed to by ptr (which is var1)
+    
+   printf("%d", var2); // Print the value of var2 (should be 37)
+
+   return 0;
+   
+}
