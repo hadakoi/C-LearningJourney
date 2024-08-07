@@ -1,22 +1,36 @@
 #include <stdio.h>
 
-long factorial(long a) {
-   if (a == 0) // Base case: factorial of 0 is 1
-      return 1;
-   return a * factorial(a - 1); // Recursive case
+// Function to calculate factorial recursively
+int factorial(int n) {
+
+   // Base case: factorial of 0 or 1 is 1
+   if (n == 0 || n == 1) {
+        return 1;
+   } 
+   else {
+      // Recursive case: n * factorial of (n - 1)
+      return n * factorial(n - 1);
+   }
+
 }
 
 int main() {
 
-   long number;
+   int number;
     
-   printf("Please enter the number: ");
-   scanf("%ld", &number); // Use %ld for long integers
+   // Prompt the user to enter a number
+   printf("Enter a positive integer: ");
+   scanf("%d", &number);
 
-   long c = factorial(number);
-    
-   printf("%ld! = %ld\n", number, c);
-    
+   // Check for invalid input
+   if (number < 0) {
+      printf("Factorial of a negative number is not defined.\n");
+   } 
+   else {
+      // Calculate and display the factorial
+      printf("Factorial of %d is %d.\n", number, factorial(number));
+   }
+
    return 0;
 
 }
