@@ -5,7 +5,9 @@ int rfibo(int n) {
     if (n <= 1) {
         return 1;
     }
+    else{
     return rfibo(n - 1) + rfibo(n - 2);
+    }
 }
 
 int main(void) {
