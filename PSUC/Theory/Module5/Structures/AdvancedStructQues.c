@@ -51,7 +51,7 @@ void inputStudentDetails(Student students[], int count) {
       printf("Roll Number: ");
       scanf("%d", &students[i].rollno);
       printf("Name: ");
-      scanf(" %[^\n]%*c", students[i].name); // Read string with spaces
+      scanf(" %[^\n]", students[i].name); // Read string with spaces
       for (int j = 0; j < 3; j++) {
          printf("Grade for subject %d: ", j + 1);
          scanf("%f", &students[i].grades[j]);
