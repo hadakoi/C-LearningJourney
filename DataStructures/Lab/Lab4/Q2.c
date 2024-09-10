@@ -12,18 +12,18 @@ iii. To sort an array of Student structures according to the roll number.
 #include <string.h>
 
 typedef struct {
-    char name[50];
-    int roll_number;
-    float cgpa;
+   char name[50];
+   int roll_number;
+   float cgpa;
 } Student;
 
 void readStudent(Student* student) {
-    printf("Enter student name: ");
-    scanf("%s", student->name);
-    printf("Enter roll number: ");
-    scanf("%d", &student->roll_number);
-    printf("Enter CGPA: ");
-    scanf("%f", &student->cgpa);
+   printf("Enter student name: ");
+   scanf("%s", student->name);
+   printf("Enter roll number: ");
+   scanf("%d", &student->roll_number);
+   printf("Enter CGPA: ");
+   scanf("%f", &student->cgpa);
 }
 
 void displayStudent(const Student* student) {
