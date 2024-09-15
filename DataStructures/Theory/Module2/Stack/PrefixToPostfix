@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+typedef struct {
+  char* data[MAX];
+  int top;
+} Stack;
+
+void initStack(Stack* stack) {
+  stack->top = -1;
+}
+
+int isEmpty(Stack* stack) {
+  return stack->top == -1;
+}
+
+int isFull(Stack* stack) {
+  return stack->top == MAX - 1;
+}
+
+void push(Stack* stack, char* str) {
+  if (!isFull(stack)) {
+    stack->data[++(stack->top)] = str;
+  } else {
+    printf("Stack overflow\n");
+  }
+}
+
+char* pop(Stack* stack) {
+  if (!isEmpty(stack)) {
+    return stack->data[(stack->top)--];
+  } else {
+    printf("Stack underflow\n");
+    return NULL;
+  }
+}
+
+int isOperator(char ch) {
+  return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+}
+
+char* postfixToPrefix(char* postfix) {
+  Stack stack;
+  initStack(&stack);
+  int length = strlen(postfix);
+
+  for (int i = 0; i < length; i++) {
+    char ch = postfix[i];
+
+    if (ch >= '0' && ch <= '9') {
+      char* operand = (char*)malloc(2 * sizeof(char));
+      operand[0] = ch;
+      operand[1] = '\0';
+      push(&stack, operand);
+    }
+
+    else if (isOperator(ch)) {
+      char* operand2 = pop(&stack);
+      char* operand1 = pop(&stack);
+
+      char* prefix = (char*)malloc(strlen(operand1) + strlen(operand2) + 3);
+      prefix[0] = ch;
+      prefix[1] = '\0';
+      strcat(prefix, operand1);
+      strcat(prefix, operand2);
+
+      push(&stack, prefix);
+
+    }
+  }
+
+  return pop(&stack);
+}
+
+int main() {
+  char postfix[MAX];
+
+  printf("Enter a postfix expression: ");
+  scanf("%s", postfix);
+
+  char* prefix = postfixToPrefix(postfix);
+  printf("Prefix expression: %s\n", prefix);
+  
+  return 0;
+}

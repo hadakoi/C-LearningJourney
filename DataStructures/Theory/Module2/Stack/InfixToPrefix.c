@@ -36,17 +36,19 @@ char Pop(Stack *stack) {
     return stack->arr[stack->top--];
 }
 
-int Precedence(char a) {
-    switch(a) {
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-            return 2;
-        default:
-            return 0;
-    }
+int precedence(char op){
+  switch (op){
+    case '+':
+    case '-':
+      return 1;
+    case '*':
+    case '/':
+      return 2;
+    case '^':
+      return 3;
+    default:
+      return 0;
+  }
 }
 
 void ReverseString(char *str) {
@@ -83,7 +85,7 @@ void InfixToPostfix(char *infix, char *postfix) {
             }
             Pop(&stack); // Remove '(' from stack
         } else {
-            while(!ifEmpty(&stack) && Precedence(stack.arr[stack.top]) >= Precedence(ch)) {
+            while(!ifEmpty(&stack) && precedence(stack.arr[stack.top]) >= precedence(ch)) {
                 postfix[k++] = Pop(&stack);
             }
             Push(&stack, ch);
