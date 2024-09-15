@@ -65,7 +65,7 @@ int main() {
   for (int i = 0; expression[i] != '\0'; i++) {
     x = expression[i];
     if (is_digit(x)) {
-      push(&s, x - '0'); // Convert char digit to integer
+      push(&s, x - '0');
     } else {
       op2 = pop(&s);
       op1 = pop(&s);
