@@ -5,18 +5,17 @@
 #define MAX 100
 
 typedef struct {
-  char* data[MAX];  
-  int top; 
+  char* data[MAX];
+  int top;
 } Stack;
 
 void initStack(Stack* stack) {
   stack->top = -1;
 }
 
-
 int isEmpty(Stack* stack) {
   return stack->top == -1;
-} 
+}
 
 int isFull(Stack* stack) {
   return stack->top == MAX - 1;
@@ -40,38 +39,33 @@ char* pop(Stack* stack) {
 }
 
 int isOperator(char ch) {
-    return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+  return ch == '+' || ch == '-' || ch == '*' || ch == '/';
 }
 
 char* prefixToPostfix(char* prefix) {
-
   Stack stack;
   initStack(&stack);
   int length = strlen(prefix);
 
-  // Traverse the prefix expression from right to left
+  // Process the prefix expression from right to left
   for (int i = length - 1; i >= 0; i--) {
     char ch = prefix[i];
 
-    // If the character is an operand (assuming single-digit operands)
     if (ch >= '0' && ch <= '9') {
       char* operand = (char*)malloc(2 * sizeof(char));
       operand[0] = ch;
       operand[1] = '\0';
       push(&stack, operand);
-    }
-    // If the character is an operator
-    else if (isOperator(ch)) {
+    } else if (isOperator(ch)) {
       char* operand1 = pop(&stack);
       char* operand2 = pop(&stack);
 
-      // Create a new string for the postfix expression
-      char* postfix = (char*)malloc(strlen(operand1) + strlen(operand2) + 2);
+      char* postfix = (char*)malloc(strlen(operand1) + strlen(operand2) + 3);
       strcpy(postfix, operand1);
       strcat(postfix, operand2);
-      strcat(postfix, &ch);  // Append the operator
+      postfix[strlen(postfix)] = ch;
+      postfix[strlen(postfix) + 1] = '\0';
 
-      // Push the result back onto the stack
       push(&stack, postfix);
     }
   }
@@ -86,10 +80,8 @@ int main() {
   scanf("%s", prefix);
 
   char* postfix = prefixToPostfix(prefix);
-  if (postfix != NULL) {
-    printf("Postfix expression: %s\n", postfix);
-    free(postfix);
-  }
-
+  printf("Postfix expression: %s\n", postfix);
+  
   return 0;
 }
+
