@@ -74,3 +74,40 @@ int main() {
 
     return 0;
 }
+
+
+/*
+
+queue: [ , , , , , ]  // Empty queue
+Front: 0
+Rear:  0
+
+queue: [ , 10, , , , ] // Enqueue 10
+Front: 0
+Rear:  1
+
+queue: [ , 10, 20, , , ] // Enqueue 20
+Front: 0
+Rear:  2
+
+queue: [ , 10, 20, 30, , ] // Enquyeu 30
+Front: 0
+Rear:  3
+
+queue: [ , 10, 20, 30, 40, ]  // Enqueue 40
+Front: 0
+Rear:  4
+
+queue: [ , 10, 20, 30, 40, 50] // Remove 10
+Front: 1
+Rear:  5
+Dequeued: 10
+
+queue: [60, 10, 20, 30, 40, 50] // Enqueue 60
+Front: 2
+Rear:  0
+
+queue: [60, , , 30, 40, 50] // Queue display which will show 30, 40, 50, 60 in this order.
+Front: 2
+Rear:  0
+*/
