@@ -1,127 +1,117 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define Max 50
+
+#define MAX 100
 
 typedef struct {
+    char arr[MAX];
     int top;
-    char arr[Max];
 } Stack;
 
-void initStack(Stack *stack) {
-    stack->top = -1;
+void initStack(Stack *s) {
+    s->top = -1;
 }
 
-int ifFull(Stack *stack) {
-    return stack->top == Max - 1;
+int isFull(Stack *s) {
+    return s->top == MAX - 1;
 }
 
-int ifEmpty(Stack *stack) {
-    return stack->top == -1;
+int isEmpty(Stack *s) {
+    return s->top == -1;
 }
 
-void Push(Stack *stack, char value) {
-    if (ifFull(stack)) {
-        printf("Stack Overflow\n");
-        return;
-    }
-    stack->arr[++stack->top] = value;
-}
-
-char Pop(Stack *stack) {
-    if (ifEmpty(stack)) {
-        printf("Stack Underflow\n");
-        return -1; // Indicating an error
-    }
-    return stack->arr[stack->top--];
-}
-
-int precedence(char op){
-  switch (op){
-    case '+':
-    case '-':
-      return 1;
-    case '*':
-    case '/':
-      return 2;
-    case '^':
-      return 3;
-    default:
-      return 0;
-  }
-}
-
-void ReverseString(char *str) {
-    int len = strlen(str);
-    for(int i = 0; i < len / 2; i++) {
-        char temp = str[i];
-        str[i] = str[len - i - 1];
-        str[len - i - 1] = temp;
+void push(Stack *s, char c) {
+    if (!isFull(s)) {
+        s->arr[++s->top] = c;
     }
 }
 
-void SwapParentheses(char *str) {
-    for(int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == '(') str[i] = ')';
-        else if (str[i] == ')') str[i] = '(';
+char pop(Stack *s) {
+    if (!isEmpty(s)) {
+        return s->arr[s->top--];
+    }
+    return '\0';
+}
+
+int precedence(char op) {
+    switch (op) {
+        case '+':
+        case '-': return 1;
+        case '*':
+        case '/': return 2;
+        case '^': return 3;
+    }
+    return 0;
+}
+
+void reverse(char *expr) {
+    int n = strlen(expr);
+    for (int i = 0; i < n / 2; i++) {
+        char temp = expr[i];
+        expr[i] = expr[n - i - 1];
+        expr[n - i - 1] = temp;
     }
 }
 
-void InfixToPostfix(char *infix, char *postfix) {
-    Stack stack;
-    int k = 0;
-    initStack(&stack);
+int isOperand(char c) {
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9');
+}
 
-    for(int i = 0; infix[i] != '\0'; i++) {
-        char ch = infix[i];
+void infixToPostfix(char *infix, char *postfix) {
+    Stack s;
+    initStack(&s);
+    int j = 0;
 
-        if((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9')) {
-            postfix[k++] = ch;
-        } else if(ch == '(') {
-            Push(&stack, ch);
-        } else if(ch == ')') {
-            while(!ifEmpty(&stack) && stack.arr[stack.top] != '(') {
-                postfix[k++] = Pop(&stack);
+    for (int i = 0; infix[i]; i++) {
+        char c = infix[i];
+        if (isOperand(c)) { // Operand check
+            postfix[j++] = c;
+        } else if (c == '(') {
+            push(&s, c);
+        } else if (c == ')') {
+            while (!isEmpty(&s) && s.arr[s.top] != '(') {
+                postfix[j++] = pop(&s);
             }
-            Pop(&stack); // Remove '(' from stack
-        } else {
-            while(!ifEmpty(&stack) && precedence(stack.arr[stack.top]) >= precedence(ch)) {
-                postfix[k++] = Pop(&stack);
+            pop(&s); // Pop the '('
+        } else { // Operator
+            while (!isEmpty(&s) && precedence(s.arr[s.top]) > precedence(c)) {
+                postfix[j++] = pop(&s);
             }
-            Push(&stack, ch);
+            push(&s, c);
         }
     }
 
-    while(!ifEmpty(&stack)) {
-        postfix[k++] = Pop(&stack);
+    while (!isEmpty(&s)) {
+        postfix[j++] = pop(&s);
     }
-
-    postfix[k++] = '\0';
+    postfix[j] = '\0'; // Null-terminate the string
 }
 
-void InfixToPrefix(char *infix, char *prefix) {
-    char reversedInfix[Max];
-    char postfix[Max];
+void infixToPrefix(char *infix, char *prefix) {
+    reverse(infix);
     
-    // Reverse the infix expression and swap parentheses
-    strcpy(reversedInfix, infix);
-    ReverseString(reversedInfix);
-    SwapParentheses(reversedInfix);
-
-    // Convert reversed infix to postfix
-    InfixToPostfix(reversedInfix, postfix);
-
-    // Reverse postfix to get prefix
-    ReverseString(postfix);
+    // Swap parentheses
+    for (int i = 0; infix[i]; i++) {
+        if (infix[i] == '(') infix[i] = ')';
+        else if (infix[i] == ')') infix[i] = '(';
+    }
+    
+    char postfix[MAX];
+    infixToPostfix(infix, postfix);
+    reverse(postfix);
+    
     strcpy(prefix, postfix);
 }
 
 int main() {
-    char infix[] = "a+b*(c-d)";
-    char prefix[Max];
+    char infix[MAX], prefix[MAX];
+    printf("Enter infix expression: ");
+    scanf("%[^\n]", infix); // Read until newline
 
-    InfixToPrefix(infix, prefix);
-    printf("Prefix Expression: %s\n", prefix);
-
+    infixToPrefix(infix, prefix);
+    printf("Prefix expression: %s\n", prefix);
+    
     return 0;
 }
+
