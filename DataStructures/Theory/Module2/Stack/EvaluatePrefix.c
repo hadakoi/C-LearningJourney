@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #define MAX 20
 
@@ -51,31 +52,31 @@ int evaluate(char op, int op1, int op2) {
 }
 
 int main() {
-  stack s;
-  char expression[MAX];
-  char x;
-  int op1, op2, val;
+    stack s;
+    char expression[MAX];
+    char x;
+    int op1, op2, val;
     
-  init(&s);
-  printf("Enter the prefix expression (e.g., -+59*32):\n(single digit operands and operators only): ");
-  scanf("%s", expression);
- 
-  for (int i = MAX - 1; i >= 0; i--) {
-    x = expression[i];
-    if (x == '\0') 
-      continue;  // Skip null characters
-    if (is_digit(x)) {
-      push(&s, x - '0'); // Convert char digit to integer and push onto stack
-    } 
-    else {
-    // Pop two operands from the stack
-      op1 = pop(&s);
-      op2 = pop(&s);
-      // Evaluate the operation and push the result back onto the stack
-      val = evaluate(x, op1, op2);
-      push(&s, val);
+    init(&s);
+    printf("Enter the prefix expression (e.g., -+59*32):\n(single digit operands and operators only): ");
+    scanf("%s", expression);
+    
+    int len = strlen(expression); // Get the length of the input expression
+
+    for (int i = len - 1; i >= 0; i--) { // Iterate from the end to the start
+        x = expression[i];
+        if (is_digit(x)) {
+            push(&s, x - '0'); // Convert char digit to integer and push onto stack
+        } 
+        else {
+            // Pop two operands from the stack
+            op1 = pop(&s); // First operand popped (top of the stack)
+            op2 = pop(&s); // Second operand popped (next item on the stack)
+            // Evaluate the operation and push the result back onto the stack
+            val = evaluate(x, op1, op2); // Use op1 and op2 for the operation
+            push(&s, val);
+        }
     }
-  }
 
     // Final result of the prefix expression will be at the top of the stack
     val = pop(&s);
@@ -83,4 +84,3 @@ int main() {
     
     return 0;
 }
-
