@@ -43,24 +43,34 @@ void DeleteNode(NODE *head, int position) {
 
     NODE current = *head;
 
+    // Check if the first node (position 0) needs to be deleted
     if (position == 0) {
-        *head = current->link;
-        free(current);
+        *head = current->link;  // Update head to the next node
+        free(current);  // Free the old head
         return;
     }
 
+    // Traverse to the node just before the one to be deleted
     for (int i = 0; i < position - 1 && current != NULL; i++) {
-        current = current->link; // Traverse to the node before the one to delete
+        current = current->link;
     }
 
+    // If the position is beyond the length of the list or the next node is NULL
     if (current == NULL || current->link == NULL) {
         printf("Position is out of bounds. No node deleted.\n");
         return;
     }
 
-    NODE temp = current->link; // Node to be deleted
-    current->link = temp->link; // Link the current node to the next of the node to delete
-    free(temp); // Free the node
+    NODE temp = current->link;  // Node to be deleted
+
+    // Check if this is the last node
+    if (temp->link == NULL) {
+        current->link = NULL;  // Update link to NULL, effectively deleting the last node
+    } else {
+        current->link = temp->link;  // Skip the node to delete
+    }
+
+    free(temp);  // Free the node
 }
 
 void DisplayNode(NODE head) {
@@ -98,3 +108,4 @@ int main() {
 
     return 0;
 }
+
