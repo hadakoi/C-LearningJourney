@@ -9,10 +9,6 @@ typedef struct node {
 
 poly_pointer NewNode(int coef, int expon) {
     poly_pointer newNode = (poly_pointer)malloc(sizeof(struct node));
-    if (newNode == NULL) {
-        printf("Memory allocation failed.\n");
-        exit(1);
-    }
     newNode->coef = coef;
     newNode->expon = expon;
     newNode->link = NULL;
@@ -48,7 +44,9 @@ poly_pointer padd(poly_pointer a, poly_pointer b) {
                 break;
             case 0:
                 sum = a->coef + b->coef;
-                if (sum) attach(sum, a->expon, &lastC);
+                if (sum) {
+                    attach(sum, a->expon, &lastC); // Attach only if the sum is non-zero
+                }
                 a = a->link;
                 b = b->link;
                 break;
