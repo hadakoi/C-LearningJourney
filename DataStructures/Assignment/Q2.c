@@ -15,7 +15,7 @@ typedef struct DirectoryNode {
     struct DirectoryNode* next;
 } *DIRECTORYNODE;
 
-DIRECTORYNODE createDirectory(const char* name) {
+DIRECTORYNODE createDirectory(char* name) {
     DIRECTORYNODE newDir = (DIRECTORYNODE)malloc(sizeof(struct DirectoryNode));
     strcpy(newDir->name, name);
     newDir->files = NULL;
@@ -24,7 +24,7 @@ DIRECTORYNODE createDirectory(const char* name) {
     return newDir;
 }
 
-FILENODE createFile(const char* name, int size) {
+FILENODE createFile(char* name, int size) {
     FILENODE newFile = (FILENODE)malloc(sizeof(struct FileNode));
     strcpy(newFile->name, name);
     newFile->size = size;
@@ -60,122 +60,166 @@ void deleteDirectory(DIRECTORYNODE dir) {
     }
 }
 
+DIRECTORYNODE findAndRemoveSubDirectory(DIRECTORYNODE parent, char* name) {
+    DIRECTORYNODE* subDirPtr = &parent->subDirs;
+    while (*subDirPtr) {
+        if (strcmp((*subDirPtr)->name, name) == 0) {
+            DIRECTORYNODE toMove = *subDirPtr;
+            *subDirPtr = toMove->next;
+            toMove->next = NULL;
+            return toMove;
+        }
+        subDirPtr = &(*subDirPtr)->next;
+    }
+    return NULL;
+}
+
+FILENODE findAndRemoveFile(DIRECTORYNODE parent, char* name) {
+    FILENODE* filePtr = &parent->files;
+    while (*filePtr) {
+        if (strcmp((*filePtr)->name, name) == 0) {
+            FILENODE toMove = *filePtr;
+            *filePtr = toMove->next;
+            toMove->next = NULL;
+            return toMove;
+        }
+        filePtr = &(*filePtr)->next;
+    }
+    return NULL;
+}
+
+void moveNode(DIRECTORYNODE srcParent, DIRECTORYNODE destParent, char* name) {
+    DIRECTORYNODE subDir = findAndRemoveSubDirectory(srcParent, name);
+    if (subDir) {
+        addDirectoryToDirectory(destParent, subDir);
+        printf("Directory '%s' moved successfully.\n", name);
+        return;
+    }
+
+    FILENODE file = findAndRemoveFile(srcParent, name);
+    if (file) {
+        addFileToDirectory(destParent, file);
+        printf("File '%s' moved successfully.\n", name);
+    } else {
+        printf("No file or directory found with the name '%s'.\n", name);
+    }
+}
+
 void listContents(DIRECTORYNODE dir) {
-    printf("Contents of directory '%s':\n", dir->name);
-    FILENODE file = dir->files;
-    while (file) {
-        printf("File: %s (Size: %d)\n", file->name, file->size);
-        file = file->next;
+    printf("Directory '%s' contents:\n", dir->name);
+    FILENODE f = dir->files;
+    while (f) {
+        printf("File: %s (Size: %d)\n", f->name, f->size);
+        f = f->next;
     }
-    DIRECTORYNODE subDir = dir->subDirs;
-    while (subDir) {
-        printf("Directory: %s\n", subDir->name);
-        subDir = subDir->next;
+    DIRECTORYNODE d = dir->subDirs;
+    while (d) {
+        printf("Directory: %s\n", d->name);
+        d = d->next;
     }
 }
 
-DIRECTORYNODE findDirectory(DIRECTORYNODE dir, const char* name) {
-    if (strcmp(dir->name, name) == 0) return dir;
-    DIRECTORYNODE subDir = dir->subDirs;
-    while (subDir) {
-        DIRECTORYNODE found = findDirectory(subDir, name);
-        if (found) return found;
-        subDir = subDir->next;
-    }
-    return NULL;
-}
-
-FILENODE findFile(DIRECTORYNODE dir, const char* name) {
-    FILENODE file = dir->files;
-    while (file) {
-        if (strcmp(file->name, name) == 0) return file;
-        file = file->next;
-    }
-    DIRECTORYNODE subDir = dir->subDirs;
-    while (subDir) {
-        FILENODE found = findFile(subDir, name);
-        if (found) return found;
-        subDir = subDir->next;
-    }
-    return NULL;
-}
-
-int calculateSize(DIRECTORYNODE dir) {
+int calculateTotalSize(DIRECTORYNODE dir) {
     int totalSize = 0;
-    FILENODE file = dir->files;
-    while (file) {
-        totalSize += file->size;
-        file = file->next;
+    FILENODE f = dir->files;
+    while (f) {
+        totalSize += f->size;
+        f = f->next;
     }
-    DIRECTORYNODE subDir = dir->subDirs;
-    while (subDir) {
-        totalSize += calculateSize(subDir);
-        subDir = subDir->next;
+    DIRECTORYNODE d = dir->subDirs;
+    while (d) {
+        totalSize += calculateTotalSize(d);
+        d = d->next;
     }
     return totalSize;
 }
 
-int main() {
-    DIRECTORYNODE root = createDirectory("root");
-    int choice, size;
-    char dirName[100], fileName[100];
-    DIRECTORYNODE currentDir = root, newDir;
-    FILENODE newFile;
+DIRECTORYNODE findNodeRecursive(DIRECTORYNODE dir, char* name) {
+    if (strcmp(dir->name, name) == 0) return dir;
+    DIRECTORYNODE subDir = dir->subDirs;
+    while (subDir) {
+        DIRECTORYNODE result = findNodeRecursive(subDir, name);
+        if (result) return result;
+        subDir = subDir->next;
+    }
+    return NULL;
+}
+
+void menu(DIRECTORYNODE root) {
+    int choice;
+    char name[100], src[100], dest[100];
+    int size;
 
     while (1) {
-        printf("\nMenu:\n1. Create Directory\n2. Create File\n3. List Contents\n4. Find Directory\n5. Find File\n6. Calculate Size\n7. Exit\nEnter choice: ");
+        printf("\n1. Create File\n2. Create Directory\n3. Delete Directory\n4. List Contents\n5. Move File/Directory\n6. Find Directory\n7. Calculate Directory Size\n8. Exit\nEnter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                printf("Enter directory name: ");
-                scanf("%s", dirName);
-                newDir = createDirectory(dirName);
-                addDirectoryToDirectory(currentDir, newDir);
-                printf("Directory created.\n");
-                break;
-
-            case 2:
                 printf("Enter file name: ");
-                scanf("%s", fileName);
+                scanf("%s", name);
                 printf("Enter file size: ");
                 scanf("%d", &size);
-                newFile = createFile(fileName, size);
-                addFileToDirectory(currentDir, newFile);
-                printf("File added to current directory.\n");
+                addFileToDirectory(root, createFile(name, size));
+                printf("File '%s' created.\n", name);
                 break;
-
+            case 2:
+                printf("Enter directory name: ");
+                scanf("%s", name);
+                addDirectoryToDirectory(root, createDirectory(name));
+                printf("Directory '%s' created.\n", name);
+                break;
             case 3:
-                listContents(currentDir);
+                printf("Enter directory name to delete: ");
+                scanf("%s", name);
+                DIRECTORYNODE toDelete = findAndRemoveSubDirectory(root, name);
+                if (toDelete) {
+                    deleteDirectory(toDelete);
+                    printf("Directory '%s' deleted.\n", name);
+                } else {
+                    printf("Directory not found.\n");
+                }
                 break;
-
             case 4:
-                printf("Enter directory name to find: ");
-                scanf("%s", dirName);
-                newDir = findDirectory(root, dirName);
-                if (newDir) printf("Directory '%s' found.\n", dirName);
-                else printf("Directory not found.\n");
+                listContents(root);
                 break;
-
             case 5:
-                printf("Enter file name to find: ");
-                scanf("%s", fileName);
-                newFile = findFile(root, fileName);
-                if (newFile) printf("File '%s' found.\n", fileName);
-                else printf("File not found.\n");
+                printf("Enter name to move: ");
+                scanf("%s", name);
+                printf("Enter destination directory name: ");
+                scanf("%s", dest);
+                DIRECTORYNODE destDir = findNodeRecursive(root, dest);
+                if (destDir) {
+                    moveNode(root, destDir, name);
+                } else {
+                    printf("Destination directory not found.\n");
+                }
                 break;
-
             case 6:
-                printf("Total size of current directory: %d\n", calculateSize(currentDir));
+                printf("Enter directory name to find: ");
+                scanf("%s", name);
+                DIRECTORYNODE foundDir = findNodeRecursive(root, name);
+                if (foundDir) {
+                    printf("Directory '%s' found.\n", foundDir->name);
+                } else {
+                    printf("Directory not found.\n");
+                }
                 break;
-
             case 7:
-                deleteDirectory(root);
-                exit(0);
-
+                printf("Total size: %d\n", calculateTotalSize(root));
+                break;
+            case 8:
+                return;
             default:
                 printf("Invalid choice.\n");
         }
     }
+}
+
+int main() {
+    DIRECTORYNODE root = createDirectory("root");
+    menu(root);
+    deleteDirectory(root);
+    return 0;
 }
 
