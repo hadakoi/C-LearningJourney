@@ -117,23 +117,65 @@ int calculateSize(DIRECTORYNODE dir) {
 
 int main() {
     DIRECTORYNODE root = createDirectory("root");
-    DIRECTORYNODE subDir1 = createDirectory("subDir1");
-    addDirectoryToDirectory(root, subDir1);
+    int choice, size;
+    char dirName[100], fileName[100];
+    DIRECTORYNODE currentDir = root, newDir;
+    FILENODE newFile;
 
-    FILENODE file1 = createFile("file1.txt", 500);
-    addFileToDirectory(root, file1);
+    while (1) {
+        printf("\nMenu:\n1. Create Directory\n2. Create File\n3. List Contents\n4. Find Directory\n5. Find File\n6. Calculate Size\n7. Exit\nEnter choice: ");
+        scanf("%d", &choice);
 
-    FILENODE file2 = createFile("file2.txt", 300);
-    addFileToDirectory(subDir1, file2);
+        switch (choice) {
+            case 1:
+                printf("Enter directory name: ");
+                scanf("%s", dirName);
+                newDir = createDirectory(dirName);
+                addDirectoryToDirectory(currentDir, newDir);
+                printf("Directory created.\n");
+                break;
 
-    listContents(root);
+            case 2:
+                printf("Enter file name: ");
+                scanf("%s", fileName);
+                printf("Enter file size: ");
+                scanf("%d", &size);
+                newFile = createFile(fileName, size);
+                addFileToDirectory(currentDir, newFile);
+                printf("File added to current directory.\n");
+                break;
 
-    FILENODE foundFile = findFile(root, "file2.txt");
-    if (foundFile) printf("Found file: %s\n", foundFile->name);
+            case 3:
+                listContents(currentDir);
+                break;
 
-    int totalSize = calculateSize(root);
-    printf("Total size of root directory: %d\n", totalSize);
+            case 4:
+                printf("Enter directory name to find: ");
+                scanf("%s", dirName);
+                newDir = findDirectory(root, dirName);
+                if (newDir) printf("Directory '%s' found.\n", dirName);
+                else printf("Directory not found.\n");
+                break;
 
-    deleteDirectory(root);
-    return 0;
+            case 5:
+                printf("Enter file name to find: ");
+                scanf("%s", fileName);
+                newFile = findFile(root, fileName);
+                if (newFile) printf("File '%s' found.\n", fileName);
+                else printf("File not found.\n");
+                break;
+
+            case 6:
+                printf("Total size of current directory: %d\n", calculateSize(currentDir));
+                break;
+
+            case 7:
+                deleteDirectory(root);
+                exit(0);
+
+            default:
+                printf("Invalid choice.\n");
+        }
+    }
 }
+
